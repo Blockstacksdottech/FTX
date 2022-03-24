@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { usersController } = require('../controllers')
+const { auth } = require('../middleware')
 
 
-router.get('/', usersController.getUsers)
+router.get('/', auth, usersController.getUsers)
+router.post('/', usersController.createUser)
 
 
 

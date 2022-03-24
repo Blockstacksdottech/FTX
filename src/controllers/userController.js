@@ -1,17 +1,23 @@
-
-
 const con = require('../config/database')
+const { generateAccessToken } = require('../utils')
 
-
-const getUsers = (request, response) => {
+const getUsers = (req, res) => {
     con.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
       if (error) {
         throw error
       }
-      response.status(200).json(results.rows)
+      res.status(200).json(results.rows)
     })
-  }
+}
+
+const createUser = (req, res) => {
+  const { email, password } = req.body
+
+  console.log(req.body)
+  res.status(200).json(generateAccessToken(email))
+}
 
 module.exports = {
-    getUsers
+    getUsers,
+    createUser
 }
