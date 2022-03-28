@@ -1,5 +1,5 @@
 const Pool = require('pg').Pool
-const connection = new Pool({
+const pool = new Pool({
   user: process.env.USER_NAME,
   host: process.env.HOST,
   database: process.env.DATABASE,
@@ -7,4 +7,4 @@ const connection = new Pool({
   port: process.env.DB_PORT,
 })
 
-module.exports = connection
+module.exports = pool
