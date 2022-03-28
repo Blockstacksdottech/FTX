@@ -49,7 +49,7 @@ const login = (req, res) => {
           message: "Invalid credentials"
         }
       }else{
-        response['token'] = generateAccessToken(password)
+        response['token'] = generateAccessToken(email)
       }
 
       res.status(response.status).json(response)

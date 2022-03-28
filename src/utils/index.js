@@ -1,7 +1,7 @@
-const { builtinModules } = require('module')
-const { generateAccessToken } = require('./jwt')
+const { generateAccessToken, verifyAccessToken } = require('./jwt')
 
 
 module.exports = {
-    generateAccessToken
+    generateAccessToken,
+    verifyAccessToken
 }

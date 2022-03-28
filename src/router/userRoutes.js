@@ -4,8 +4,7 @@ const { usersController } = require('../controllers')
 const { auth } = require('../middleware')
 
 
-router.get('/', auth, usersController.getUsers)
-router.post('/', usersController.createUser)
+router.get('/profile', auth, usersController.profile)
 
 
 

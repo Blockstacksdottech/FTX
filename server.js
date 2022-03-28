@@ -25,4 +25,4 @@ app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
 
-// process.on('uncaughtException', (err) => { console.error("Database connection issue : ", err.message) })
+process.on('uncaughtException', (err) => { console.error("Database connection issue : ", err.message) })
