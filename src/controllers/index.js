@@ -1,10 +1,10 @@
 const usersController = require('./userController')
 const authController = require('./authController')
-const spotController = require('./spotController')
+const marketController = require('./marketController')
 
 
 module.exports = {
     usersController,
     authController,
-    spotController
+    marketController
 }

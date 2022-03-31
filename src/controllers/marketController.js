@@ -11,9 +11,7 @@ const spotMarket = async (req, res) => {
     })
 
     const results = await getMarkets.json()
-    
     if(!results.success) throw Error(results.error)
-    
     response = {
       status: 200,
       data: results.result
@@ -30,6 +28,37 @@ const spotMarket = async (req, res) => {
   }
 }
 
+
+const tradeMarket = async (req, res) => {
+  const { trade } = req.query
+  let response;
+  try{
+    
+    const url = `${process.env.FTX_API}/markets/${trade}`
+    const getTrade = await fetch(url, (data) => {
+      return data
+    })
+
+    const results = await getTrade.json()
+    if(!results.success) throw Error(results.error)
+    response = {
+      status: 200,
+      data: results.result
+    }
+  }catch(err){
+    console.error(err.message)
+    response = {
+      status: 400,
+      message: `Server Error`,
+      data: []
+    }
+  }finally{
+    res.status(response.status).json(response)
+    return;
+  }
+}
+
 module.exports = {
   spotMarket,
+  tradeMarket
 }
