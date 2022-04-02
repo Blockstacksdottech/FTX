@@ -4,7 +4,7 @@ const fetch = require('node-fetch')
 const timestamp = async (req, res) => {
 
   let response;
-  const { start_time, end_time, resolution } = req.query
+  const { start_time, end_time, resolution, trade } = req.query
 
   try{
     /** 20 Steps back */
@@ -18,7 +18,7 @@ const timestamp = async (req, res) => {
     const timestampStartTime = Number(start_time || startTime.getTime() / 1000)
 
 
-    const url = `${process.env.FTX_API}/markets/1INCH-PERP/candles?resolution=${Number(resolution)}&start_time=${timestampStartTime}&end_time=${timestampEndTime}`
+    const url = `${process.env.FTX_API}/markets/${trade}/candles?resolution=${Number(resolution)}&start_time=${timestampStartTime}&end_time=${timestampEndTime}`
     const getHistoricalByTimestamp = await fetch(url, (data) => {
           return data
         })
@@ -37,36 +37,41 @@ const timestamp = async (req, res) => {
     console.error(err.message)
     response = {
       status: 400,
-      message: `Server Error`,
+      message: `Server Error: ${err.message}`,
       data: []
     }
   }finally{
     res.status(response.status).json(response)
+    return;
   }
 }
 
 
 const ohcl = async (req, res) => {
-  const { trade } = req.query
+  
   let response;
-  try{
-    
-    const url = `${process.env.FTX_API}/markets/${trade}`
-    const getTrade = await fetch(url, (data) => {
-      return data
-    })
+  const { resolution, trade } = req.query
 
-    const results = await getTrade.json()
+  try{
+    if(!resolution) throw Error("Missing argument resolution")
+    const url = `${process.env.FTX_API}/markets/${trade}/candles/last?resolution=${resolution}`
+    const getOHCLData = await fetch(url, (data) => {
+          return data
+        })
+
+    const results = await getOHCLData.json()
     if(!results.success) throw Error(results.error)
+
     response = {
       status: 200,
-      data: results.result
+      data: results.result,
+     
     }
   }catch(err){
     console.error(err.message)
     response = {
       status: 400,
-      message: `Server Error`,
+      message: `Server Error: ${err.message}`,
       data: []
     }
   }finally{

@@ -5,7 +5,7 @@ const { auth } = require('../middleware')
 
 
 router.get('/', auth, historicalController.timestamp)
-router.get('/', auth, historicalController.ohcl)
+router.get('/live', auth, historicalController.ohcl)
 
 
 
