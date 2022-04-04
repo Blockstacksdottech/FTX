@@ -6,10 +6,11 @@ const profile = (req, res) => {
     const { authorization } = req.headers
 
     const token = authorization.split(' ')[1]
-    const emailData = verifyAccessToken(token)
+    const data = verifyAccessToken(token)
+    const emailData = data?.email
 
     con.query(`SELECT * FROM users WHERE email = '${emailData}' `, (err, results) => {
-      const { email, firstname, lastname } = results.rows[0]
+      const { email, firstname, lastname, role } = results.rows[0]
 
       res.status(200).json({
         status: 200,
@@ -17,6 +18,7 @@ const profile = (req, res) => {
           first_name: firstname,
           last_name: lastname,
           email, 
+          role
         }
       })
     })
