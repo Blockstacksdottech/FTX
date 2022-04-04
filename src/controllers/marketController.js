@@ -58,7 +58,38 @@ const tradeMarket = async (req, res) => {
   }
 }
 
+
+const orderBook = async (req, res) => {
+  const { trade } = req.query
+  let response;
+  try{
+
+    const url = `${process.env.FTX_API}/markets/${trade}/orderbook?depth=20`
+    const getOrderBook = await fetch(url, (data) => {
+      return data
+    })
+
+    const results = await getOrderBook.json()
+    if(!results.success) throw Error(results.error)
+    response = {
+      status: 200,
+      data: results.result
+    }
+  }catch(err){
+    console.error(err.message)
+    response = {
+      status: 400,
+      message: `Server Error`,
+      data: []
+    }
+  }finally{
+    res.status(response.status).json(response)
+    return;
+  }
+}
+
 module.exports = {
   spotMarket,
-  tradeMarket
+  tradeMarket,
+  orderBook
 }
