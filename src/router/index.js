@@ -4,6 +4,7 @@ const authRoutes = require('./authRoutes')
 const marketRoutes = require('./marketRoutes')
 const historicalRoutes = require('./historicalRoutes')
 const adminRoutes = require('./adminRoutes')
+const walletRoutes = require('./walletRoutes')
 
 
 
@@ -15,6 +16,7 @@ router.use('/', authRoutes)
 router.use('/', userRoutes)
 router.use('/market', marketRoutes)
 router.use('/history', historicalRoutes)
+router.use('/wallet', walletRoutes)
 
 
 module.exports = router

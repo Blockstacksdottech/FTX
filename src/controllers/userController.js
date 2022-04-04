@@ -5,8 +5,7 @@ const profile = (req, res) => {
 
     const { authorization } = req.headers
 
-    const token = authorization.split(' ')[1]
-    const data = verifyAccessToken(token)
+    const data = verifyAccessToken(authorization)
     const emailData = data?.email
 
     con.query(`SELECT * FROM users WHERE email = '${emailData}' `, (err, results) => {

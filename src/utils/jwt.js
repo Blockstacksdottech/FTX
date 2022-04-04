@@ -10,9 +10,9 @@ const generateAccessToken = (email, role) => {
 
 const verifyAccessToken = (token) => {
     const secret_key = process.env.JWT_SECRET
-    let email;
-    jwt.verify(token,  secret_key, function(err, decoded) {
-        data = decoded.data
+    const cleanToken = token.split(' ')[1]
+    jwt.verify(cleanToken,  secret_key, function(err, decoded) {
+        data = decoded?.data
       });
     return data; 
 }
