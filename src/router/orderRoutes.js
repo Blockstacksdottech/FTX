@@ -5,7 +5,7 @@ const { auth } = require('../middleware')
 
 
 router.post('/', auth, orderController.createOrder)
-// router.get('/live', auth, historicalController.ohcl)
+router.get('/transactions', auth, orderController.transactionHistory)
 
 
 

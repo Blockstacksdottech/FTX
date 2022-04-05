@@ -46,21 +46,30 @@ const createOrder = async (req, res) => {
 }
 
 
-const tradeMarket = async (req, res) => {
-  const { trade } = req.query
+const transactionHistory = async (req, res) => {
   let response;
   try{
+
+    const { authorization } = req.headers
+    const { email } = verifyAccessToken(authorization)
     
-    const url = `${process.env.FTX_API}/markets/${trade}`
-    const getTrade = await fetch(url, (data) => {
-      return data
-    })
+    const query = `SELECT 
+                    O.id,
+                    O.market,
+                    O.side,
+                    O.status,
+                    O.price,
+                    O.size,
+                    O.date_created
+                  FROM orders O
+                  RIGHT JOIN users U ON O.user_id = U.id
+                  WHERE U.email = '${email}'
+                  ORDER BY O.date_created desc;`
+    const getResult = await queryDatabase(query)
 
-    const results = await getTrade.json()
-    if(!results.success) throw Error(results.error)
     response = {
       status: 200,
-      data: results.result
+      data: getResult
     }
   }catch(err){
     console.error(err.message)
@@ -76,37 +85,8 @@ const tradeMarket = async (req, res) => {
 }
 
 
-const orderBook = async (req, res) => {
-  const { trade } = req.query
-  let response;
-  try{
-
-    const url = `${process.env.FTX_API}/markets/${trade}/orderbook?depth=20`
-    const getOrderBook = await fetch(url, (data) => {
-      return data
-    })
-
-    const results = await getOrderBook.json()
-    if(!results.success) throw Error(results.error)
-    response = {
-      status: 200,
-      data: results.result
-    }
-  }catch(err){
-    console.error(err.message)
-    response = {
-      status: 400,
-      message: `Server Error`,
-      data: []
-    }
-  }finally{
-    res.status(response.status).json(response)
-    return;
-  }
-}
 
 module.exports = {
   createOrder,
-  tradeMarket,
-  orderBook
+  transactionHistory,
 }
