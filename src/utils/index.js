@@ -1,9 +1,10 @@
 const { generateAccessToken, verifyAccessToken } = require('./jwt')
-const { queryDatabase  } = require('./common')
+const { queryDatabase, getUserDetails  } = require('./common')
 
 
 module.exports = {
     generateAccessToken,
     verifyAccessToken,
-    queryDatabase
+    queryDatabase,
+    getUserDetails
 }

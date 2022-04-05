@@ -8,6 +8,16 @@ const queryDatabase = (query, callback) => new Promise((res, rej) => {
     })
 })
 
+const getUserDetails = (email) => new Promise(async (res, rej) => {
+    const query = `SELECT id, email, firstname, lastname FROM users WHERE email = '${email}'`
+    const callback = (result) => {
+        const [ userData ] = result.rows
+        res(userData)
+    }
+    queryDatabase(query, callback).catch(rej)
+})
+
 module.exports = {
-    queryDatabase
+    queryDatabase,
+    getUserDetails
 }
