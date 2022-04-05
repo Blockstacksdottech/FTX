@@ -8,6 +8,8 @@ const orderController = require('./orderController')
 
 /** Admin */
 const spotController = require('./admin/spotController')
+const traderWalletController = require('./admin/traderWalletController')
+
 
 
 
@@ -18,5 +20,6 @@ module.exports = {
     historicalController,
     spotController,
     walletController,
-    orderController
+    orderController,
+    traderWalletController
 }
