@@ -1,4 +1,4 @@
-const { queryDatabase, getUserDetails, verifyAccessToken } = require('../utils')
+const { queryDatabase, getUserDetails, verifyAccessToken, createReport } = require('../utils')
 const fetch = require('node-fetch')
 
 const createOrder = async (req, res) => {
@@ -26,9 +26,9 @@ const createOrder = async (req, res) => {
     const result = {
         "createdAt": new Date(),
         "message": "Order Placed."
-
     }
 
+    await createReport(email, `${side} order`)
     response = {
       status: 200,
       data: result

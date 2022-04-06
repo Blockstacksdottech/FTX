@@ -1,5 +1,5 @@
 const con = require('../config/database')
-const { generateAccessToken } = require('../utils')
+const { generateAccessToken, createReport } = require('../utils')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -11,7 +11,7 @@ const register = (req, res) => {
 
     const query = `INSERT INTO users (email, password, role) values ('${email}','${hashPassword}', '${setRoles}');`
 
-    con.query(query, (error, results) => {
+    con.query(query, async (error, results) => {
       let status = 201
       let message = "Success"
       if (error) {
@@ -19,6 +19,7 @@ const register = (req, res) => {
         message = "Email already exists!"
       }
 
+      if(!error) await createReport(email, 'registered')
       res.status(status).json({
         status,
         message,
@@ -33,7 +34,7 @@ const login = (req, res) => {
   const { email, password } = req.body 
 
   const query = `SELECT * FROM users WHERE email = '${email}'`
-    con.query(query, (error, results) => {
+    con.query(query, async (error, results) => {
       const passwordHash = results?.rows[0]?.password || ''
       const role = results?.rows[0]?.role
 
@@ -50,6 +51,7 @@ const login = (req, res) => {
         }
       }else{
         response['token'] = generateAccessToken(email, role)
+        await createReport(email, 'login')
       }
 
       res.status(response.status).json(response)

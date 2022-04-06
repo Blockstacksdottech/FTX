@@ -5,6 +5,7 @@ const {
     adminTraderWalletController,
     adminTokenController,
     adminOrderController,
+    adminReportController,
 } = require('../controllers')
 
 const { auth } = require('../middleware')
@@ -25,6 +26,9 @@ router.post('/tokens/update', auth, adminTokenController.updateToken)
 router.post('/orders/instant-order', auth, adminOrderController.createInstantOrder)
 router.put('/orders/instant-order', auth, adminOrderController.updateInstantOrder)
 router.delete('/orders/instant-order/:id', auth, adminOrderController.deleteInstantOrder)
+
+/** Generate Reports */
+router.get('/reports', auth, adminReportController.generateReport)
 
 
 
