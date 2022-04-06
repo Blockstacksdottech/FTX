@@ -20,6 +20,11 @@ app.use(
 
 app.use('/', router)
 
+app.use(function (req, res, next) {
+  res.status(400).json({ status: 400, message: "Unauthorized" });
+  return;
+})
+
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

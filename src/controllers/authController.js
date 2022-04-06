@@ -37,6 +37,7 @@ const login = (req, res) => {
     con.query(query, async (error, results) => {
       const passwordHash = results?.rows[0]?.password || ''
       const role = results?.rows[0]?.role
+      const active = results?.rows[0]?.active
 
       let response = {
         status: 200,
@@ -44,16 +45,24 @@ const login = (req, res) => {
       }
 
       const compare = bcrypt.compareSync(password, passwordHash)
-      if(!compare || results.rows.length === 0) {
-        response = {
-          status: 404,
-          message: "Invalid credentials"
-        }
-      }else{
-        response['token'] = generateAccessToken(email, role)
-        await createReport(email, 'login')
+      switch (true) {
+        case !compare || results.rows.length === 0:
+          response = {
+            status: 404,
+            message: "Invalid credentials"
+          }
+          break;
+      
+        case active === false:
+          response = {
+            status: 404,
+            message: "Your account is locked, please contact the administrator."
+          }
+          break;
+        default:
+          response['token'] = generateAccessToken(email, role)
+          await createReport(email, 'login')
       }
-
       res.status(response.status).json(response)
     })
 }

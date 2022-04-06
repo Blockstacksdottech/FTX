@@ -6,6 +6,7 @@ const {
     adminTokenController,
     adminOrderController,
     adminReportController,
+    adminUsersController
 } = require('../controllers')
 
 const { auth } = require('../middleware')
@@ -29,6 +30,11 @@ router.delete('/orders/instant-order/:id', auth, adminOrderController.deleteInst
 
 /** Generate Reports */
 router.get('/reports', auth, adminReportController.generateReport)
+
+/** Users */
+router.get('/users', auth, adminUsersController.users)
+router.put('/users', auth, adminUsersController.setStatus)
+
 
 
 
