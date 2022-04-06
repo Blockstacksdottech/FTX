@@ -86,7 +86,34 @@ const transactionHistory = async (req, res) => {
 
 
 
+const instantOrders = async (req, res) => {
+  let response;
+  try{
+
+    const query = `SELECT type, size, side FROM instant_orders`
+    const getResult = await queryDatabase(query)
+
+    response = {
+      status: 200,
+      data: getResult
+    }
+  }catch(err){
+    console.error(err.message)
+    response = {
+      status: 400,
+      message: `Server Error`,
+      data: []
+    }
+  }finally{
+    res.status(response.status).json(response)
+    return;
+  }
+}
+
+
+
 module.exports = {
   createOrder,
   transactionHistory,
+  instantOrders
 }

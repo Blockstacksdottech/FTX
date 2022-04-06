@@ -6,6 +6,7 @@ const { auth } = require('../middleware')
 
 router.post('/', auth, orderController.createOrder)
 router.get('/transactions', auth, orderController.transactionHistory)
+router.get('/instant-order', auth, orderController.instantOrders)
 
 
 

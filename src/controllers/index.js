@@ -7,21 +7,26 @@ const walletController = require('./walletController')
 const orderController = require('./orderController')
 
 /** Admin */
-const spotController = require('./admin/spotController')
-const traderWalletController = require('./admin/traderWalletController')
-const tokenController = require('./admin/tokenController')
+const adminSpotController = require('./admin/adminSpotController')
+const adminTraderWalletController = require('./admin/adminTraderWalletController')
+const adminTokenController = require('./admin/adminTokenController')
+const adminOrderController = require('./admin/adminOrderController')
 
 
 
 
 module.exports = {
+    /** Trader Controllers */
     usersController,
     authController,
     marketController,
     historicalController,
-    spotController,
     walletController,
     orderController,
-    traderWalletController,
-    tokenController
+    /** Admin Controllers */
+    adminSpotController,
+    adminTraderWalletController,
+    adminTokenController,
+    adminOrderController,
+
 }
