@@ -22,6 +22,7 @@ app.use(
 )
 
 app.use('/', router)
+app.use(cors())
 
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
