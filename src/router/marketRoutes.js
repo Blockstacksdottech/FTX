@@ -3,9 +3,9 @@ const router = express.Router();
 const { marketController } = require('../controllers')
 const { auth } = require('../middleware')
 
-router.get('/', auth, marketController.tradeMarket)
-router.get('/spot', auth, marketController.spotMarket)
-router.get('/orderbook', auth, marketController.orderBook)
+router.get('/', marketController.tradeMarket)
+router.get('/:type', marketController.market)
+router.get('/orderbook', marketController.orderBook)
 
 
 

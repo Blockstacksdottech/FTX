@@ -1,20 +1,33 @@
 const con = require('../config/database')
 const fetch = require('node-fetch')
+const { filterResults } = require('../services/dashboardService')
 
-const spotMarket = async (req, res) => {
+const market = async (req, res) => {
 
+  const { type } = req.params
   let response;
+
+
   try{
+
     const url = `${process.env.FTX_API}/markets`
+
     const getMarkets = await fetch(url, (data) => {
       return data
     })
 
     const results = await getMarkets.json()
     if(!results.success) throw Error(results.error)
+    let { result } = results
+
+
+    result = await filterResults(result, type)
+
+    const sortResults = result.sort((a, b) => b.volumeUsd24h - a.volumeUsd24h)
+
     response = {
       status: 200,
-      data: results.result
+      data: sortResults
     }
   }catch(err){
     console.error(err.message)
@@ -89,7 +102,7 @@ const orderBook = async (req, res) => {
 }
 
 module.exports = {
-  spotMarket,
+  market,
   tradeMarket,
   orderBook
 }
