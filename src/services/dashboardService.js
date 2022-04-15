@@ -88,8 +88,22 @@ const overview = (result) => {
 }
 
 
+const overviewFutures = (result) => {
+    return result.sort((a, b) => b.volumeUsd24h - a.volumeUsd24h)
+                    .map(({ name, marginPrice, changeBod, volumeUsd24h}) => ({
+                        name,
+                        price: marginPrice,
+                        change: changeBod,
+                        volume: volumeUsd24h
+                    }))
+                    .slice(0, 4)
+
+}
+
+
 module.exports = {
     filterResults,
     sortResults,
-    overview
+    overview,
+    overviewFutures
 }
