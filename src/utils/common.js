@@ -17,7 +17,16 @@ const getUserDetails = (email) => new Promise(async (res, rej) => {
     queryDatabase(query, callback).catch(rej)
 })
 
+const getFiats = () => new Promise(async (res, rej) => {
+    const query = `SELECT name FROM fiats`
+    const callback = (result) => {
+        res(result.rows)
+    }
+    queryDatabase(query, callback).catch(rej)
+})
+
 module.exports = {
     queryDatabase,
-    getUserDetails
+    getUserDetails,
+    getFiats
 }

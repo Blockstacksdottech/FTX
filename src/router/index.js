@@ -6,6 +6,7 @@ const historicalRoutes = require('./historicalRoutes')
 const adminRoutes = require('./adminRoutes')
 const walletRoutes = require('./walletRoutes')
 const orderRoutes = require('./orderRoutes')
+const dashboardRoutes = require('./dashboardRoutes')
 
 
 
@@ -19,6 +20,7 @@ router.use('/market', marketRoutes)
 router.use('/history', historicalRoutes)
 router.use('/wallet', walletRoutes)
 router.use('/orders', orderRoutes)
+router.use('/dashboard', dashboardRoutes)
 
 
 module.exports = router

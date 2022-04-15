@@ -5,6 +5,7 @@ const marketController = require('./marketController')
 const historicalController = require('./historicalController')
 const walletController = require('./walletController')
 const orderController = require('./orderController')
+const dashboardController = require('./dashboardController')
 
 /** Admin */
 const adminSpotController = require('./admin/adminSpotController')
@@ -25,6 +26,8 @@ module.exports = {
     historicalController,
     walletController,
     orderController,
+    dashboardController,
+    
     /** Admin Controllers */
     adminSpotController,
     adminTraderWalletController,
