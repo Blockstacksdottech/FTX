@@ -3,7 +3,7 @@ const router = express.Router();
 const { dashboardController } = require('../controllers')
 const { auth } = require('../middleware')
 
-router.get('/mobile', auth, dashboardController.mobile)
-router.get('/web', auth, dashboardController.web)
+router.get('/mobile', dashboardController.mobile)
+router.get('/web', dashboardController.web)
 
 module.exports = router
