@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const { filterResults, sortResults, overview, overviewFutures } = require('../services/dashboardService')
 
 const mobile = async (req, res) => {
+  const host = req.headers.host
   let response;
   const { type, sort } = req.query
   try{
@@ -15,7 +16,7 @@ const mobile = async (req, res) => {
     const overviewResult = overview(result)
 
     const filters = await filterResults(result, type)
-    const rank_list = sortResults(filters, sort)
+    const rank_list = sortResults(filters, sort, host)
 
     response = {
       status: 200,
@@ -42,6 +43,8 @@ const mobile = async (req, res) => {
 const web = async (req, res) => {
   let response;
   const { type, sort } = req.query
+  const host = req.headers.host
+
   try{
     const vol24hUrl = `${process.env.FTX_API}/stats/24h_volume`
     const vol30dUrl = `${process.env.FTX_API}/stats/30d_volume`
@@ -76,7 +79,7 @@ const web = async (req, res) => {
 
     const totalLend = resultBorrowSummary.map(({ size }) => size ).reduce((partialSum, a) => partialSum + a, 0)
 
-    const futures = overviewFutures(resultFuture)
+    const futures = overviewFutures(resultFuture, host)
 
     response = {
       status: 200,

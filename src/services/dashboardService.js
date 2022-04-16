@@ -48,13 +48,14 @@ const filterResults = async (result, type) => {
 }
 
 
-const sortResults = (result, sort) => {
+const sortResults = (result, sort, host) => {
     return result
-            .map(({ name, price, changeBod, volumeUsd24h}) => ({
+            .map(({ name, price, changeBod, volumeUsd24h, underlying, baseCurrency}) => ({
                 name,
                 price,
                 change: changeBod,
-                volume: volumeUsd24h
+                volume: volumeUsd24h,
+                icon: `${host}/${ underlying || baseCurrency }.png`
             }))
             .sort((a, b) => {
                 let sorting;
@@ -88,13 +89,14 @@ const overview = (result) => {
 }
 
 
-const overviewFutures = (result) => {
+const overviewFutures = (result, host) => {
     return result.sort((a, b) => b.volumeUsd24h - a.volumeUsd24h)
-                    .map(({ name, marginPrice, changeBod, volumeUsd24h}) => ({
+                    .map(({ name, marginPrice, changeBod, volumeUsd24h, underlying, baseCurrency}) => ({
                         name,
                         price: marginPrice,
                         change: changeBod,
-                        volume: volumeUsd24h
+                        volume: volumeUsd24h,
+                        icon: `${host}/${ underlying || baseCurrency }.png`
                     }))
                     .slice(0, 4)
 

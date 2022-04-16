@@ -22,6 +22,7 @@ app.use(
 )
 
 app.use('/', router)
+app.use(express.static('assets'))
 app.use(cors())
 
 app.all('/*', function(req, res, next) {

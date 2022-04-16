@@ -9,5 +9,5 @@ module.exports = {
     queryDatabase,
     getUserDetails,
     createReport,
-    getFiats
+    getFiats,
 }
