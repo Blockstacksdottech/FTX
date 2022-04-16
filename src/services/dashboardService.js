@@ -19,7 +19,7 @@ const filterResults = async (result, type) => {
         let filter;
         switch (type) {
             case 'spot':
-                filter = item.type === type && item.volumeUsd24h !== 0 && !isLeveraged && !isFuture
+                filter = item.type === type && item.volumeUsd24h !== 0 && !isLeveraged && !isFuture && !isVolatility
                 break;
             case 'future':
                 filter = item.type === type && item.volumeUsd24h !== 0 && isFuture && !isVolatility && !tokenizedEquity
