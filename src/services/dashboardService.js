@@ -26,28 +26,28 @@ const filterResults = async (result, type) => {
         let filter;
         switch (type) {
             case 'spot':
-                filter = item.type === type && item.volumeUsd24h !== 0 && !isLeveraged && !isFuture && !isVolatility
+                filter = item.type === type  && !isLeveraged && !isFuture && !isVolatility && !isStocks
                 break;
             case 'future':
-                filter = item.type === type && item.volumeUsd24h !== 0 && isFuture && !isVolatility && !tokenizedEquity && !isPrediction
+                filter = item.type === type  && !isStocks && isFuture && !isVolatility && !tokenizedEquity && !isPrediction
                 break;
             case 'stocks':
-                filter = item.volumeUsd24h !== 0 && isStocks
+                filter = isStocks
                 break;
             case 'leverage':
-                filter = item.volumeUsd24h !== 0 && isLeveraged
+                filter = isLeveraged
                 break;
             case 'volatility':
-                filter = item.volumeUsd24h !== 0 && isVolatility
+                filter =  isVolatility
                 break;
             case 'prediction':
-                filter = item.volumeUsd24h !== 0 && isPrediction
+                filter =  isPrediction
                 break;
             case 'fiat':
-                filter = item.volumeUsd24h !== 0 && isFiat
+                filter =  isFiat
                 break;
             default:
-                filter = item.type === type && item.volumeUsd24h !== 0 && isBear && isBull
+                filter = item.type === type && isBear && isBull
                 break;
         }
         return filter

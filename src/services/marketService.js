@@ -12,7 +12,7 @@ const marketSort = (result, sort, host) => {
                 let sorting;
                 switch (sort) {
                     case 'name':
-                        sorting = 1
+                        sorting = a.name.localeCompare(b.name)
                         break;
                     case 'volume':
                         sorting = b.volume - a.volume
@@ -24,7 +24,7 @@ const marketSort = (result, sort, host) => {
                         sorting = b.change - a.change
                         break;
                     case '-name':
-                        sorting = -1
+                        sorting = b.name.localeCompare(a.name)
                         break;
                     case '-volume':
                         sorting = a.volume - b.volume
