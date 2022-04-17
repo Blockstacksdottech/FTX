@@ -1,12 +1,13 @@
-const con = require('../config/database')
 const fetch = require('node-fetch')
 const { filterResults } = require('../services/dashboardService')
+const { marketSort } = require('../services/marketService')
 
 const market = async (req, res) => {
 
   const { type } = req.params
+  const { sort } = req.query
+  const host = req.headers.host
   let response;
-
 
   try{
 
@@ -22,8 +23,7 @@ const market = async (req, res) => {
 
 
     result = await filterResults(result, type)
-
-    const sortResults = result.sort((a, b) => b.volumeUsd24h - a.volumeUsd24h)
+    const sortResults = marketSort(result, sort, host)
 
     response = {
       status: 200,

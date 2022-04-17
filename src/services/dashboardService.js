@@ -2,9 +2,12 @@ const { getFiats } = require('../utils')
 
 const filterResults = async (result, type) => {
 
-    const fiats = await getFiats()
-    const listFiat = fiats.map(({ name }) => name)
-
+    let fiats,
+        isFiat;
+    if(type === 'fiat'){
+        fiats = await getFiats()
+    }
+    
     return result.filter(item => {
         const { baseCurrency, name, underlying, tokenizedEquity, restricted} = item
         const isLeveraged = baseCurrency?.search("BEAR") >= 0 || baseCurrency?.search("BULL") >= 0
@@ -12,7 +15,11 @@ const filterResults = async (result, type) => {
         const isFuture = underlying !== null
         const isStocks = restricted
         const isPrediction = name.search('/') === -1 && name.search('-') === -1
-        const isFiat = listFiat.includes(name)
+
+        if(type === 'fiat'){
+            const listFiat = fiats.map(({ name }) => name)
+            isFiat = listFiat.includes(name)
+        }
 
         
     
@@ -22,7 +29,7 @@ const filterResults = async (result, type) => {
                 filter = item.type === type && item.volumeUsd24h !== 0 && !isLeveraged && !isFuture && !isVolatility
                 break;
             case 'future':
-                filter = item.type === type && item.volumeUsd24h !== 0 && isFuture && !isVolatility && !tokenizedEquity
+                filter = item.type === type && item.volumeUsd24h !== 0 && isFuture && !isVolatility && !tokenizedEquity && !isPrediction
                 break;
             case 'stocks':
                 filter = item.volumeUsd24h !== 0 && isStocks
